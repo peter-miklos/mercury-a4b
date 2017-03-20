@@ -31,16 +31,5 @@
       "state": "SC",
       "zip": "29577"
     }
-  },
-  {
-    "id": 4,
-    "name": "Jill Smith",
-    "phone": "843-555-4567",
-    "address": {
-      "street": "333 North Kings Highway",
-      "city": "Myrtle Beach",
-      "state": "SC",
-      "zip": "29577"
-    }
   }
 ]
