@@ -1,0 +1,46 @@
+[
+  {
+    "id": 1,
+    "name": "Bob Smith",
+    "phone": "843-555-1234",
+    "address": {
+      "street": "123 North Kings Highway",
+      "city": "Myrtle Beach",
+      "state": "SC",
+      "zip": "29577"
+    }
+  },
+  {
+    "id": 2,
+    "name": "Jim Smith",
+    "phone": "843-555-2345",
+    "address": {
+      "street": "321 North Kings Highway",
+      "city": "Myrtle Beach",
+      "state": "SC",
+      "zip": "29577"
+    }
+  },
+  {
+    "id": 3,
+    "name": "Tom Smith",
+    "phone": "843-555-3456",
+    "address": {
+      "street": "222 North Kings Highway",
+      "city": "Myrtle Beach",
+      "state": "SC",
+      "zip": "29577"
+    }
+  },
+  {
+    "id": 4,
+    "name": "Jill Smith",
+    "phone": "843-555-4567",
+    "address": {
+      "street": "333 North Kings Highway",
+      "city": "Myrtle Beach",
+      "state": "SC",
+      "zip": "29577"
+    }
+  }
+]

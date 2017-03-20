@@ -1,3 +1,6 @@
-<h1>
-  {{title}}
-</h1>
+<md-toolbar color="primary">
+  <span id="title">{{title}}</span>
+  <span class="toolbar-spacer"></span>
+  <a routerLink="/search" routerLinkActice="active"><md-icon id="search-icon">search</md-icon></a>
+</md-toolbar>
+<router-outlet></router-outlet>

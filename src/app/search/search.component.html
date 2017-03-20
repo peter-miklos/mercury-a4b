@@ -1,0 +1,21 @@
+<md-grid-list cols="1">
+  <h2>Search</h2>
+  <form>
+    <md-input-container>
+      <input mdInput type="search" name="query" id="query" [(ngModel)]="query" (keyup.enter)="search()" />
+    </md-input-container>
+    <button id="search" md-mini-fab color="primary" type="button" (click)="search()"><md-icon>search</md-icon></button>
+    <button id="show-all" md-mini-fab color="primary" type="button" (click)="showAll()"><md-icon>home</md-icon></button>
+  </form>
+  <md-list *ngIf="searchResults">
+    <md-list-item *ngFor="let person of searchResults; let i = index">
+      <md-icon md-list-avatar>account_circle</md-icon>
+      <h4 md-line id="name-phone-{{person.id}}"><a routerLink="/edit/{{person.id}}" routerLinkActive="active" id="name-{{person.id}}">{{ person.name }}</a> ({{person.phone}})</h4>
+      <p md-line id="ad-street-{{person.id}}">{{person.address.street}}</p>
+      <p md-line id="ad-city-state-zip-{{person.id}}">{{person.address.city}}, {{person.address.state}} {{person.address.zip}}</p>
+    </md-list-item>
+  </md-list>
+  <div *ngIf="searchResults && searchResults.length === 0" id="no-result">
+    No results found
+  </div>
+</md-grid-list>
