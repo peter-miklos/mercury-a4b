@@ -10,12 +10,14 @@ import { SearchComponent }              from './search/search.component';
 import { routing, appRoutingProviders } from './app-routing.module';
 import { SearchService  }               from './_services/search.service';
 import { EditComponent }                from './edit/edit.component';
+import { NewComponent } from './new/new.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     SearchComponent,
-    EditComponent
+    EditComponent,
+    NewComponent
   ],
   imports: [
     BrowserModule,
