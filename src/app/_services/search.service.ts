@@ -49,8 +49,10 @@ export class SearchService {
     if (index != -1) {
       persons.splice(index, 1);
       persons.push(person);
-      sessionStorage.setItem('persons', JSON.stringify(persons));
+    } else {
+      persons.push(person);
     }
+    sessionStorage.setItem('persons', JSON.stringify(persons));
   }
 
   private addPersonsToSession(data: any) {

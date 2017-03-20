@@ -16,6 +16,7 @@ describe('SearchService', () => {
   let service: SearchService;
   let persons: [];
   let newPerson: {};
+  let updatedPerson: {};
   let backend: MockBackend;
   let testNumber: number;
 
@@ -44,8 +45,19 @@ describe('SearchService', () => {
         }
       }
     ];
-    newPerson = newPerson = {
+    updatedPerson = {
       "id": 2,
+      "name": "Jim Smith",
+      "phone": "843-555-4321",
+      "address": {
+        "street": "321 London Road",
+        "city": "Bath",
+        "state": "NJ",
+        "zip": "55555"
+      }
+    };
+    newPerson = {
+      "id": 3,
       "name": "Jim Smith",
       "phone": "843-555-4321",
       "address": {
@@ -209,12 +221,21 @@ describe('SearchService', () => {
 
     it('saves updated data in sessionStorage', done => {
       service.addPersonsToSession(persons);
-      service.save(newPerson);
+      service.save(updatedPerson);
       const storedPersons = JSON.parse(sessionStorage.getItem('persons'));
       expect(storedPersons.length).toBe(2);
-      expect(storedPersons).toContain(newPerson);
+      expect(storedPersons).toContain(updatedPerson);
       expect(storedPersons).toContain(persons[0]);
       done();
     });
+
+    it('saves the new data in sessionStorage', done => {
+      service.addPersonsToSession(persons);
+      service.save(newPerson);
+      const storedPersons = JSON.parse(sessionStorage.getItem('persons'));
+      expect(storedPersons.length).toBe(3);
+      expect(storedPersons).toContain(newPerson);
+      done();
+    })
   });
 });
