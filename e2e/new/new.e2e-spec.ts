@@ -8,7 +8,7 @@ describe("New feature", () => {
     page = new MercuryA4Page();
     page.navigateTo("/new");
     element(by.css("input#name")).sendKeys("Jimmy Smith");
-    element(by.css("input#phone")).sendKeys("123456");
+    element(by.css("input#phone")).sendKeys("601-555-3322");
     element(by.css("input#street")).sendKeys("test street");
     element(by.css("input#city")).sendKeys("test city");
     element(by.css("input#state")).sendKeys("NC");
@@ -32,7 +32,7 @@ describe("New feature", () => {
     element(by.css("input#query")).sendKeys("George Smith");
     element(by.css("button#search")).click();
     expect(element.all(by.css("md-list-item")).count()).toBe(1);
-    expect(page.getElemContent("name-phone-5")).toBe("George Smith (123456)");
+    expect(page.getElemContent("name-phone-5")).toBe("George Smith (601-555-3322)");
     expect(page.getElemContent("ad-street-5")).toBe("test street");
     expect(page.getElemContent("ad-city-state-zip-5")).toBe("test city, NC 54321");
   })
