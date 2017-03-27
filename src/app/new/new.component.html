@@ -1,3 +1,31 @@
-<p>
-  new works!
-</p>
+<div class="" *ngIf="!loading">
+  <h3>Create new person</h3>
+  <md-input-container>
+    <input mdInput type="text" name="name" id="name" [(ngModel)]="person.name" placeholder="Name" />
+  </md-input-container>
+  <md-input-container>
+    <input mdInput type="text" name="phone" id="phone" [(ngModel)]="person.phone" placeholder="Phone" />
+  </md-input-container>
+  <div>
+    <strong>Address:</strong>
+  </div>
+  <md-input-container>
+    <input mdInput type="text" name="street" id="street" [(ngModel)]="address.street" placeholder="Street"/>
+  </md-input-container>
+  <md-input-container>
+    <input mdInput type="text" name="city" id="city" [(ngModel)]="address.city" placeholder="City"/>
+  </md-input-container>
+  <md-input-container>
+    <input mdInput type="text" name="state" id="state" [(ngModel)]="address.state" placeholder="State"/>
+  </md-input-container>
+  <md-input-container>
+    <input mdInput type="text" name="zip" id="zip" [(ngModel)]="address.zip" placeholder="Zip" />
+  </md-input-container>
+  <div>
+    <button md-raised-button color="primary" id="submit-person" *ngIf="!loading" type="button" name="submit-person" (click)="submit()">Submit</button>
+    <button md-raised-button color="primary" type="button" name="back-to-search" id="back-to-search" *ngIf="!loading" (click)="gotoSearch()">Back to Search</button>
+  </div>
+</div>
+<div *ngIf="loading" id="loading">
+  Submitting...
+</div>
