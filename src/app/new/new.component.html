@@ -1,30 +1,50 @@
 <div class="" *ngIf="!loading">
   <h3>Create new person</h3>
-  <md-input-container>
-    <input mdInput type="text" name="name" id="name" [(ngModel)]="person.name" placeholder="Name" />
-  </md-input-container>
-  <md-input-container>
-    <input mdInput type="text" name="phone" id="phone" [(ngModel)]="person.phone" placeholder="Phone" />
-  </md-input-container>
-  <div>
-    <strong>Address:</strong>
-  </div>
-  <md-input-container>
-    <input mdInput type="text" name="street" id="street" [(ngModel)]="address.street" placeholder="Street"/>
-  </md-input-container>
-  <md-input-container>
-    <input mdInput type="text" name="city" id="city" [(ngModel)]="address.city" placeholder="City"/>
-  </md-input-container>
-  <md-input-container>
-    <input mdInput type="text" name="state" id="state" [(ngModel)]="address.state" placeholder="State"/>
-  </md-input-container>
-  <md-input-container>
-    <input mdInput type="text" name="zip" id="zip" [(ngModel)]="address.zip" placeholder="Zip" />
-  </md-input-container>
-  <div>
-    <button md-raised-button color="primary" id="submit-person" *ngIf="!loading" type="button" name="submit-person" (click)="submit()">Submit</button>
-    <button md-raised-button color="primary" type="button" name="back-to-search" id="back-to-search" *ngIf="!loading" (click)="gotoSearch()">Back to Search</button>
-  </div>
+  <form [formGroup]="person" novalidate (ngSubmit)="submit(person.value)">
+    <md-input-container>
+      <input mdInput type="text" name="name" id="name" formControlName="name" placeholder="Name" />
+      <small [hidden]="person.controls.name.valid || (person.controls.name.untouched && !submitted)">
+        Name is required (minimum 5 characters)
+      </small>
+    </md-input-container>
+    <md-input-container>
+      <input mdInput type="text" name="phone" id="phone" formControlName="phone" placeholder="Phone" />
+      <small [hidden]="person.controls.phone.valid || (person.controls.phone.untouched && !submitted)">
+        Phone is required (minimum 12 characters)
+      </small>
+    </md-input-container>
+    <div>
+      <strong>Address:</strong>
+    </div>
+    <md-input-container formGroupName="address">
+      <input mdInput type="text" name="street" id="street" formControlName="street" placeholder="Street"/>
+      <small [hidden]="person.controls.address.controls.street.valid || (person.controls.address.controls.street.untouched && !submitted)">
+        Street is required
+      </small>
+    </md-input-container>
+    <md-input-container formGroupName="address">
+      <input mdInput type="text" name="city" id="city" formControlName="city" placeholder="City"/>
+      <small [hidden]="person.controls.address.controls.city.valid || (person.controls.address.controls.city.untouched && !submitted)">
+        City is required
+      </small>
+    </md-input-container>
+    <md-input-container formGroupName="address">
+      <input mdInput type="text" name="state" id="state" formControlName="state" placeholder="State"/>
+      <small [hidden]="person.controls.address.controls.state.valid || (person.controls.address.controls.state.untouched && !submitted)">
+        State is required (minimum 2 characters)
+      </small>
+    </md-input-container>
+    <md-input-container formGroupName="address">
+      <input mdInput type="text" name="zip" id="zip" formControlName="zip" placeholder="Zip" />
+      <small [hidden]="person.controls.address.controls.zip.valid || (person.controls.address.controls.zip.untouched && !submitted)">
+        Zip is required
+      </small>
+    </md-input-container>
+    <div>
+      <button md-raised-button color="primary" id="submit-person" *ngIf="!loading" type="button" name="submit-person" type="submit" [disabled]="!person.valid">Submit</button>
+      <button md-raised-button color="primary" type="button" name="back-to-search" id="back-to-search" *ngIf="!loading" (click)="gotoSearch()">Back to Search</button>
+    </div>
+  </form>
 </div>
 <div *ngIf="loading" id="loading">
   Submitting...

@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Router }            from '@angular/router';
+import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
 
 import { SearchService }     from '../_services/search.service';
 import { Person }            from '../_models/person.model';
-import { Address }           from '../_models/address.model';
 
 @Component({
   selector: 'app-new',
@@ -12,18 +12,15 @@ import { Address }           from '../_models/address.model';
 })
 export class NewComponent implements OnInit {
 
-  private person: Person;
-  private address: Address;
+  private person: FormGroup;
   private loading = false;
   private persons: Person[];
 
   constructor(
     private searchService: SearchService,
     private router: Router,
-  ) {
-    this.person = new Person();
-    this.address = new Address();
-  }
+    private _fb: FormBuilder
+  ) { }
 
   ngOnInit() {
     this.searchService.getAll().subscribe(
@@ -32,13 +29,24 @@ export class NewComponent implements OnInit {
       },
       error => console.error(error)
     );
+    this.person = this._fb.group({
+        id: [''],
+        name: ['', [Validators.required, Validators.minLength(5)]],
+        phone: ['', [Validators.required, Validators.minLength(12)]],
+        address: this._fb.group({
+            street: ['', Validators.required],
+            city: ['', Validators.required],
+            state: ['', [Validators.required, Validators.minLength(2)]],
+            zip: ['', Validators.required],
+        })
+    });
   }
 
-  submit(): void {
+  submit(model: Person): void {
     this.loading = true;
-    this.person.id = this.getNextId();
-    this.person.address = this.address;
-    this.searchService.save(this.person);
+    console.log(this.person.valid);
+    model.id = this.getNextId();
+    this.searchService.save(model);
     this.gotoSearch();
   }
 
