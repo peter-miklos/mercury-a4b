@@ -18,7 +18,7 @@ describe("Search feature", () => {
   it('displays all persons if home button is clicked', () => {
     element(by.css("button#show-all")).click();
 
-    expect(allPersons.count()).toBe(3);
+    expect(allPersons.count()).toBe(5);
     expect(page.getElemContent("name-phone-1")).toBeDefined();
     expect(page.getElemContent("name-phone-2")).toBeDefined();
     expect(page.getElemContent("name-phone-3")).toBeDefined();
@@ -28,7 +28,7 @@ describe("Search feature", () => {
     element(by.css("input#query")).sendKeys("*");
     element(by.css("button#search")).click();
 
-    expect(allPersons.count()).toBe(3);
+    expect(allPersons.count()).toBe(5);
     expect(page.getElemContent("name-phone-1")).toBeDefined();
     expect(page.getElemContent("name-phone-2")).toBeDefined();
     expect(page.getElemContent("name-phone-3")).toBeDefined();
@@ -38,7 +38,7 @@ describe("Search feature", () => {
     element(by.css("input#query")).sendKeys("");
     element(by.css("button#search")).click();
 
-    expect(allPersons.count()).toBe(3);
+    expect(allPersons.count()).toBe(5);
     expect(page.getElemContent("name-phone-1")).toBeDefined();
     expect(page.getElemContent("name-phone-2")).toBeDefined();
     expect(page.getElemContent("name-phone-3")).toBeDefined();
