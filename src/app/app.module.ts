@@ -9,8 +9,9 @@ import { AppComponent }                 from './app.component';
 import { SearchComponent }              from './search/search.component';
 import { routing, appRoutingProviders } from './app-routing.module';
 import { SearchService  }               from './_services/search.service';
+import { FormControlService }           from './_services/form-control.service';
 import { EditComponent }                from './edit/edit.component';
-import { NewComponent } from './new/new.component';
+import { NewComponent }                 from './new/new.component';
 
 @NgModule({
   declarations: [
@@ -29,7 +30,8 @@ import { NewComponent } from './new/new.component';
   ],
   providers: [
     appRoutingProviders,
-    SearchService
+    SearchService,
+    FormControlService
   ],
   bootstrap: [AppComponent]
 })

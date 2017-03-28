@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Router }            from '@angular/router';
-import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
+import { FormGroup } from '@angular/forms';
 
 import { SearchService }     from '../_services/search.service';
+import { FormControlService } from '../_services/form-control.service';
 import { Person }            from '../_models/person.model';
 
 @Component({
@@ -18,8 +19,8 @@ export class NewComponent implements OnInit {
 
   constructor(
     private searchService: SearchService,
+    private formControlService: FormControlService,
     private router: Router,
-    private _fb: FormBuilder
   ) { }
 
   ngOnInit() {
@@ -29,17 +30,7 @@ export class NewComponent implements OnInit {
       },
       error => console.error(error)
     );
-    this.person = this._fb.group({
-        id: [''],
-        name: ['', [Validators.required, Validators.minLength(5)]],
-        phone: ['', [Validators.required, Validators.minLength(12)]],
-        address: this._fb.group({
-            street: ['', Validators.required],
-            city: ['', Validators.required],
-            state: ['', [Validators.required, Validators.minLength(2)]],
-            zip: ['', Validators.required],
-        })
-    });
+    this.person = this.formControlService.toFormGroup();
   }
 
   submit(model: Person): void {
