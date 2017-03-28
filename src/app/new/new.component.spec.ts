@@ -93,7 +93,7 @@ describe('NewComponent', () => {
     router = de.injector.get(Router);
     spyOn(searchService, 'save');
     spyOn(searchService, 'getAll').and.returnValue(Observable.create(o => o.next(persons)));
-    spyOn(formControlService, 'toFormGroup').and.returnValue(personForm),
+    spyOn(formControlService, 'toFormGroup').and.returnValue(personForm);
     spyOn(component, 'gotoSearch');
     fixture.detectChanges();
   });
