@@ -2,7 +2,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { DebugElement } from '@angular/core';
 import { MaterialModule } from '@angular/material';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { Router }     from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
@@ -10,8 +10,6 @@ import { Observable }          from 'rxjs/Observable';
 
 import { NewComponent }   from './new.component';
 import { SearchService }  from '../_services/search.service';
-// import { Person }         from '../_models/person.model';
-// import { Address }        from '../_models/address.model';
 
 describe('NewComponent', () => {
   let component: NewComponent;
@@ -20,11 +18,8 @@ describe('NewComponent', () => {
   let el: HTMLElement;
   let searchService: SearchService;
   let router: Router;
-  // let person: Person;
   let persons: [];
   let newPerson: {};
-  // let emptyPerson: {};
-  // let emptyAddress: {};
 
   beforeEach(async(() => {
     persons = [
@@ -62,23 +57,11 @@ describe('NewComponent', () => {
         "zip": "55555"
       }
     };
-    // emptyPerson = {
-    //   "id": "",
-    //   "name": "",
-    //   "phone": "",
-    //   "address": {}
-    // };
-    // emptyAddress = {
-    //   "street": "",
-    //   "city": "",
-    //   "state": "",
-    //   "zip": ""
-    // };
     TestBed.configureTestingModule({
       declarations: [ NewComponent ],
       imports: [
         MaterialModule, FormsModule, HttpModule,
-        RouterTestingModule
+        RouterTestingModule, ReactiveFormsModule
       ],
       providers: [ SearchService ]
     })
@@ -92,13 +75,10 @@ describe('NewComponent', () => {
     el = de.nativeElement;
     searchService = de.injector.get(SearchService);
     router = de.injector.get(Router);
-    // person = de.injector.get(Person);
     spyOn(searchService, 'save');
     spyOn(searchService, 'getAll').and.returnValue(Observable.create(o => o.next(persons)));
     spyOn(component, 'gotoSearch');
     fixture.detectChanges();
-    // spyOn(router, 'navigate');
-    // spyOn(Person.prototype).and.returnValue(emptyPerson);
   });
 
   describe("Init", () => {
@@ -133,7 +113,7 @@ describe('NewComponent', () => {
     it("calls the searchService.save method with new data if submit button clicked", () => {
       el.querySelector('button#submit-person').click();
       fixture.detectChanges();
-      expect(searchService.save).toHaveBeenCalledWith(component.person);
+      expect(searchService.save).toHaveBeenCalledWith(newPerson);
     });
 
     it("sets loading var to true when submit button is clicked", () => {
@@ -144,6 +124,123 @@ describe('NewComponent', () => {
     it("calls gotoSearch function after submitting new data", () => {
       el.querySelector('button#submit-person').click();
       expect(component.gotoSearch).toHaveBeenCalled();
+    })
+
+    it("sets the form validity to False if name is missing", () => {
+      el.querySelector('input#name').value = "";
+      el.querySelector('input#name').dispatchEvent(new Event('input'));
+      expect(component.person.invalid).toBeTruthy();
+    })
+
+    it("disables the submit button if name is missing", () => {
+      el.querySelector('input#name').value = "";
+      el.querySelector('input#name').dispatchEvent(new Event('input'));
+      fixture.detectChanges();
+      expect(el.querySelector('button#submit-person').disabled).toBeTruthy();
+    })
+
+    it("sets the form validity to False if name is too short", () => {
+      el.querySelector('input#name').value = "Bob";
+      el.querySelector('input#name').dispatchEvent(new Event('input'));
+      expect(component.person.invalid).toBeTruthy();
+    })
+
+    it("disables the submit button if name is too short", () => {
+      el.querySelector('input#name').value = "Bob";
+      el.querySelector('input#name').dispatchEvent(new Event('input'));
+      fixture.detectChanges();
+      expect(el.querySelector('button#submit-person').disabled).toBeTruthy();
+    })
+
+    it("sets the form validity to False if phone is missing", () => {
+      el.querySelector('input#phone').value = "";
+      el.querySelector('input#phone').dispatchEvent(new Event('input'));
+      expect(component.person.invalid).toBeTruthy();
+    })
+
+    it("disables the submit button if phone is missing", () => {
+      el.querySelector('input#phone').value = "";
+      el.querySelector('input#phone').dispatchEvent(new Event('input'));
+      fixture.detectChanges();
+      expect(el.querySelector('button#submit-person').disabled).toBeTruthy();
+    })
+
+    it("sets the form validity to False if phone is too short", () => {
+      el.querySelector('input#phone').value = "500-555-11";
+      el.querySelector('input#phone').dispatchEvent(new Event('input'));
+      expect(component.person.invalid).toBeTruthy();
+    })
+
+    it("disables the submit button if phone is too short", () => {
+      el.querySelector('input#phone').value = "500-555-11";
+      el.querySelector('input#phone').dispatchEvent(new Event('input'));
+      fixture.detectChanges();
+      expect(el.querySelector('button#submit-person').disabled).toBeTruthy();
+    })
+
+    it("sets the form validity to False if street is missing", () => {
+      el.querySelector('input#street').value = "";
+      el.querySelector('input#street').dispatchEvent(new Event('input'));
+      expect(component.person.invalid).toBeTruthy();
+    })
+
+    it("disables the submit button if street is missing", () => {
+      el.querySelector('input#street').value = "";
+      el.querySelector('input#street').dispatchEvent(new Event('input'));
+      fixture.detectChanges();
+      expect(el.querySelector('button#submit-person').disabled).toBeTruthy();
+    })
+
+    it("sets the form validity to False if city is missing", () => {
+      el.querySelector('input#city').value = "";
+      el.querySelector('input#city').dispatchEvent(new Event('input'));
+      expect(component.person.invalid).toBeTruthy();
+    })
+
+    it("disables the submit button if city is missing", () => {
+      el.querySelector('input#city').value = "";
+      el.querySelector('input#city').dispatchEvent(new Event('input'));
+      fixture.detectChanges();
+      expect(el.querySelector('button#submit-person').disabled).toBeTruthy();
+    })
+
+    it("sets the form validity to False if state is missing", () => {
+      el.querySelector('input#state').value = "";
+      el.querySelector('input#state').dispatchEvent(new Event('input'));
+      expect(component.person.invalid).toBeTruthy();
+    })
+
+    it("disables the submit button if state is missing", () => {
+      el.querySelector('input#state').value = "";
+      el.querySelector('input#state').dispatchEvent(new Event('input'));
+      fixture.detectChanges();
+      expect(el.querySelector('button#submit-person').disabled).toBeTruthy();
+    })
+
+    it("sets the form validity to False if state is too short", () => {
+      el.querySelector('input#state').value = "N";
+      el.querySelector('input#state').dispatchEvent(new Event('input'));
+      expect(component.person.invalid).toBeTruthy();
+    })
+
+    it("disables the submit button if state is too short", () => {
+      el.querySelector('input#state').value = "N";
+      el.querySelector('input#state').dispatchEvent(new Event('input'));
+      fixture.detectChanges();
+      expect(el.querySelector('button#submit-person').disabled).toBeTruthy();
+    })
+
+    it("sets the form validity to False if zip is missing", () => {
+      el.querySelector('input#zip').value = "";
+      el.querySelector('input#zip').dispatchEvent(new Event('input'));
+      expect(component.person.invalid).toBeTruthy();
+    })
+
+    it("disables the submit button if zip is missing", () => {
+      el.querySelector('input#zip').value = "";
+      el.querySelector('input#zip').dispatchEvent(new Event('input'));
+      fixture.detectChanges();
+      expect(el.querySelector('button#submit-person').disabled).toBeTruthy();
     })
   })
 

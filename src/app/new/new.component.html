@@ -3,14 +3,20 @@
   <form [formGroup]="person" novalidate (ngSubmit)="submit(person.value)">
     <md-input-container>
       <input mdInput type="text" name="name" id="name" formControlName="name" placeholder="Name" />
-      <small [hidden]="person.controls.name.valid || (person.controls.name.untouched && !submitted)">
-        Name is required (minimum 5 characters)
+      <small [hidden]="!person.controls.name.hasError('required') || (person.controls.name.untouched && !submitted)">
+        Name is required
+      </small>
+      <small [hidden]="!person.controls.name.hasError('minlength') || (person.controls.name.untouched && !submitted)">
+        Minimum of 5 characters
       </small>
     </md-input-container>
     <md-input-container>
       <input mdInput type="text" name="phone" id="phone" formControlName="phone" placeholder="Phone" />
-      <small [hidden]="person.controls.phone.valid || (person.controls.phone.untouched && !submitted)">
-        Phone is required (minimum 12 characters)
+      <small [hidden]="!person.controls.phone.hasError('required') || (person.controls.phone.untouched && !submitted)">
+        Phone is required
+      </small>
+      <small [hidden]="!person.controls.phone.hasError('minlength') || (person.controls.phone.untouched && !submitted)">
+        Minimum of 12 characters
       </small>
     </md-input-container>
     <div>
@@ -18,25 +24,28 @@
     </div>
     <md-input-container formGroupName="address">
       <input mdInput type="text" name="street" id="street" formControlName="street" placeholder="Street"/>
-      <small [hidden]="person.controls.address.controls.street.valid || (person.controls.address.controls.street.untouched && !submitted)">
+      <small [hidden]="!person.controls.address.controls.street.hasError('required') || (person.controls.address.controls.street.untouched && !submitted)">
         Street is required
       </small>
     </md-input-container>
     <md-input-container formGroupName="address">
       <input mdInput type="text" name="city" id="city" formControlName="city" placeholder="City"/>
-      <small [hidden]="person.controls.address.controls.city.valid || (person.controls.address.controls.city.untouched && !submitted)">
+      <small [hidden]="!person.controls.address.controls.city.hasError('required') || (person.controls.address.controls.city.untouched && !submitted)">
         City is required
       </small>
     </md-input-container>
     <md-input-container formGroupName="address">
       <input mdInput type="text" name="state" id="state" formControlName="state" placeholder="State"/>
-      <small [hidden]="person.controls.address.controls.state.valid || (person.controls.address.controls.state.untouched && !submitted)">
-        State is required (minimum 2 characters)
+      <small [hidden]="!person.controls.address.controls.state.hasError('required') || (person.controls.address.controls.state.untouched && !submitted)">
+        State is required
+      </small>
+      <small [hidden]="!person.controls.address.controls.state.hasError('minlength') || (person.controls.address.controls.state.untouched && !submitted)">
+        Minimum of 2 characters
       </small>
     </md-input-container>
     <md-input-container formGroupName="address">
       <input mdInput type="text" name="zip" id="zip" formControlName="zip" placeholder="Zip" />
-      <small [hidden]="person.controls.address.controls.zip.valid || (person.controls.address.controls.zip.untouched && !submitted)">
+      <small [hidden]="!person.controls.address.controls.zip.hasError('required') || (person.controls.address.controls.zip.untouched && !submitted)">
         Zip is required
       </small>
     </md-input-container>

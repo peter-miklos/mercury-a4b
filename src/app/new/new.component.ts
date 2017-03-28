@@ -44,7 +44,6 @@ export class NewComponent implements OnInit {
 
   submit(model: Person): void {
     this.loading = true;
-    console.log(this.person.valid);
     model.id = this.getNextId();
     this.searchService.save(model);
     this.gotoSearch();
