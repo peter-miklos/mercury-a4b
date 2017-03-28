@@ -36,9 +36,4 @@ describe("New feature", () => {
     expect(page.getElemContent("ad-street-5")).toBe("test street");
     expect(page.getElemContent("ad-city-state-zip-5")).toBe("test city, NC 54321");
   })
-
-  xit("person cannot be saved if name field is not filled", () => {
-    element(by.css("input#name")).clear();
-    expect(element(by.id("submit-person")).isEnabled()).toBeFalsy();
-  })
 })
