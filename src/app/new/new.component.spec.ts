@@ -3,6 +3,7 @@ import { By } from '@angular/platform-browser';
 import { DebugElement } from '@angular/core';
 import { MaterialModule } from '@angular/material';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { Router }     from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
@@ -10,6 +11,7 @@ import { Observable }          from 'rxjs/Observable';
 
 import { NewComponent }   from './new.component';
 import { SearchService }  from '../_services/search.service';
+import { FormControlService } from '../_services/form-control.service';
 
 describe('NewComponent', () => {
   let component: NewComponent;
@@ -17,9 +19,11 @@ describe('NewComponent', () => {
   let de: DebugElement;
   let el: HTMLElement;
   let searchService: SearchService;
+  let formControlService: FormControlService;
   let router: Router;
   let persons: [];
   let newPerson: {};
+  let personForm: FormGroup;
 
   beforeEach(async(() => {
     persons = [
@@ -57,13 +61,24 @@ describe('NewComponent', () => {
         "zip": "55555"
       }
     };
+    personForm = new FormGroup({
+      id: new FormControl(''),
+      name: new FormControl('', [Validators.required, Validators.minLength(5)]),
+      phone: new FormControl('', [Validators.required, Validators.minLength(12)]),
+      address: new FormGroup({
+        street: new FormControl('', Validators.required),
+        city: new FormControl('', Validators.required),
+        state: new FormControl('', [Validators.required, Validators.minLength(2)]),
+        zip: new FormControl('', Validators.required)
+      })
+    })
     TestBed.configureTestingModule({
       declarations: [ NewComponent ],
       imports: [
         MaterialModule, FormsModule, HttpModule,
         RouterTestingModule, ReactiveFormsModule
       ],
-      providers: [ SearchService ]
+      providers: [ SearchService, FormControlService ]
     })
     .compileComponents();
   }));
@@ -74,9 +89,11 @@ describe('NewComponent', () => {
     de = fixture.debugElement;
     el = de.nativeElement;
     searchService = de.injector.get(SearchService);
+    formControlService = de.injector.get(FormControlService);
     router = de.injector.get(Router);
     spyOn(searchService, 'save');
     spyOn(searchService, 'getAll').and.returnValue(Observable.create(o => o.next(persons)));
+    spyOn(formControlService, 'toFormGroup').and.returnValue(personForm),
     spyOn(component, 'gotoSearch');
     fixture.detectChanges();
   });
