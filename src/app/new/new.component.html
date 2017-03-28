@@ -1,5 +1,6 @@
 <div class="" *ngIf="!loading">
-  <h3>Create new person</h3>
+  <h3 *ngIf="person['_value']['id']">{{ person["_value"]["name"] }} (id: {{person["_value"]["id"]}} )</h3>
+  <h3 *ngIf="!person['_value']['id']">Add new person</h3>
   <form [formGroup]="person" novalidate (ngSubmit)="submit(person.value)">
     <md-input-container>
       <input mdInput type="text" name="name" id="name" formControlName="name" placeholder="Name" />
