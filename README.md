@@ -1,27 +1,21 @@
 # MercuryA4b
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.0.0-beta.32.3.
+The program act as a basic contact manager app that allows user to see the stored contacts with details and edit them. Contacts are stored in a json file.
 
-## Development server
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+### Instructions for how to run the program
 
-## Code scaffolding
+```
+$ git clone https://github.com/peter-miklos/mercury-a4b
+$ cd mercury-a4b
+$ npm install
+$ npm start
+$ visit http://localhost:4200
+```
+#### Instructions for how to run tests
+After running ```npm install``` for unit tests run ```npm test``` and for E2E testing run ```protractor```.
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive/pipe/service/class/module`.
-
-## Build
-
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `-prod` flag for a production build.
-
-## Running unit tests
-
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
-Before running the tests make sure you are serving the app via `ng serve`.
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+### Used technologies
+- Angular2 CLI
+- Jasmine/Karma for unit testing
+- Protractor for E2E testing
+- Angular Material for UI
