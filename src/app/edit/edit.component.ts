@@ -1,6 +1,6 @@
 import { Component, Input, OnInit }       from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
-import { FormGroup }                      from '@angular/forms';
+import { FormGroup, FormControl }                      from '@angular/forms';
 import 'rxjs/add/operator/switchMap';
 
 import { SearchService }            from '../_services/search.service';
@@ -10,7 +10,7 @@ import { Address }                  from '../_models/address.model';
 
 @Component({
   selector: 'app-edit',
-  templateUrl: '../new/new.component.html',
+  templateUrl: './edit.component.html',
   styleUrls: ['./edit.component.css']
 })
 export class EditComponent implements OnInit {
@@ -23,10 +23,11 @@ export class EditComponent implements OnInit {
     private formControlService: FormControlService,
     private activatedRoute: ActivatedRoute,
     private router: Router
-  ) { }
+  ) {
+    this.person = new FormGroup({})
+  }
 
   ngOnInit() {
-    this.person = this.formControlService.toFormGroup();
     this.activatedRoute.params
         .switchMap((params: Params) => this.searchService.getPerson(+params['id']))
         .subscribe(person => {

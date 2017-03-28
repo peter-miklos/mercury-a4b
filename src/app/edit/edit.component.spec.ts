@@ -78,12 +78,12 @@ describe('EditComponent', () => {
     searchService = de.injector.get(SearchService);
     formControlService = de.injector.get(FormControlService);
     router = de.injector.get(Router);
-    spyOn(formControlService, 'toFormGroup').and.returnValue(personForm);
   });
 
   describe("person is not found", () => {
     beforeEach(() => {
       spyOn(searchService, 'getPerson').and.returnValue(Promise.resolve(undefined));
+      spyOn(formControlService, 'toFormGroup').and.returnValue(new FormGroup({}));
     });
 
     it('should create', () => {
@@ -95,7 +95,7 @@ describe('EditComponent', () => {
       expect(searchService.getPerson).toHaveBeenCalled();
     })
 
-    xit('informs user if no person was found, undefined is returned by searchService', fakeAsync(() => {
+    it('informs user if no person was found, undefined is returned by searchService', fakeAsync(() => {
       component.ngOnInit();
 
       fixture.whenStable().then(() => {
@@ -126,6 +126,7 @@ describe('EditComponent', () => {
       spyOn(searchService, 'save');
       spyOn(component, 'gotoSearch');
       spyOn(router, 'navigate');
+      spyOn(formControlService, 'toFormGroup').and.returnValue(personForm);
       component.ngOnInit();
     });
 

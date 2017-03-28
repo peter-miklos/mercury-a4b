@@ -1,32 +1,64 @@
-<div class="" *ngIf="person && !loading">
-  <h3>{{person.name}} (id: {{person.id}})</h3>
-  <md-input-container>
-    <input mdInput type="text" name="name" id="name" [(ngModel)]="person.name" placeholder="Name" />
-  </md-input-container>
-  <md-input-container>
-    <input mdInput type="text" name="phone" id="phone" [(ngModel)]="person.phone" placeholder="Phone" />
-  </md-input-container>
-  <div>
-    <strong>Address:</strong>
-  </div>
-  <md-input-container>
-    <input mdInput type="text" name="street" id="street" [(ngModel)]="address.street" placeholder="Street"/>
-  </md-input-container>
-  <md-input-container>
-    <input mdInput type="text" name="city" id="city" [(ngModel)]="address.city" placeholder="City"/>
-  </md-input-container>
-  <md-input-container>
-    <input mdInput type="text" name="state" id="state" [(ngModel)]="address.state" placeholder="State"/>
-  </md-input-container>
-  <md-input-container>
-    <input mdInput type="text" name="zip" id="zip" [(ngModel)]="address.zip" placeholder="Zip" />
-  </md-input-container>
+<div class="" *ngIf="person['value']['name'] && !loading">
+  <h3>{{ person["_value"]["name"] }} (id: {{person["_value"]["id"]}})</h3>
+  <form [formGroup]="person" novalidate (ngSubmit)="submit(person.value)">
+    <md-input-container>
+      <input mdInput type="text" name="name" id="name" formControlName="name" placeholder="Name" />
+      <small [hidden]="!person.controls.name.hasError('required') || (person.controls.name.untouched && !submitted)">
+        Name is required
+      </small>
+      <small [hidden]="!person.controls.name.hasError('minlength') || (person.controls.name.untouched && !submitted)">
+        Minimum of 5 characters
+      </small>
+    </md-input-container>
+    <md-input-container>
+      <input mdInput type="text" name="phone" id="phone" formControlName="phone" placeholder="Phone" />
+      <small [hidden]="!person.controls.phone.hasError('required') || (person.controls.phone.untouched && !submitted)">
+        Phone is required
+      </small>
+      <small [hidden]="!person.controls.phone.hasError('minlength') || (person.controls.phone.untouched && !submitted)">
+        Minimum of 12 characters
+      </small>
+    </md-input-container>
+    <div>
+      <strong>Address:</strong>
+    </div>
+    <md-input-container formGroupName="address">
+      <input mdInput type="text" name="street" id="street" formControlName="street" placeholder="Street"/>
+      <small [hidden]="!person.controls.address.controls.street.hasError('required') || (person.controls.address.controls.street.untouched && !submitted)">
+        Street is required
+      </small>
+    </md-input-container>
+    <md-input-container formGroupName="address">
+      <input mdInput type="text" name="city" id="city" formControlName="city" placeholder="City"/>
+      <small [hidden]="!person.controls.address.controls.city.hasError('required') || (person.controls.address.controls.city.untouched && !submitted)">
+        City is required
+      </small>
+    </md-input-container>
+    <md-input-container formGroupName="address">
+      <input mdInput type="text" name="state" id="state" formControlName="state" placeholder="State"/>
+      <small [hidden]="!person.controls.address.controls.state.hasError('required') || (person.controls.address.controls.state.untouched && !submitted)">
+        State is required
+      </small>
+      <small [hidden]="!person.controls.address.controls.state.hasError('minlength') || (person.controls.address.controls.state.untouched && !submitted)">
+        Minimum of 2 characters
+      </small>
+    </md-input-container>
+    <md-input-container formGroupName="address">
+      <input mdInput type="text" name="zip" id="zip" formControlName="zip" placeholder="Zip" />
+      <small [hidden]="!person.controls.address.controls.zip.hasError('required') || (person.controls.address.controls.zip.untouched && !submitted)">
+        Zip is required
+      </small>
+    </md-input-container>
+    <div>
+      <button md-raised-button color="primary" id="submit-person" *ngIf="!loading" type="button" name="submit-person" type="submit" [disabled]="!person.valid">Submit</button>
+      <button md-raised-button color="primary" type="button" name="back-to-search" id="back-to-search" *ngIf="!loading" (click)="gotoSearch()">Back to Search</button>
+    </div>
+  </form>
 </div>
-<div *ngIf="!person" id="no-person-found">
+<div *ngIf="!person['value']['name']" id="no-person-found">
   No person found.
 </div>
-<div>
-  <button md-raised-button color="primary" id="save-person" *ngIf="person && !loading" type="button" name="save-person" (click)="save()">Save</button>
+<div *ngIf="!person['value']['name']" id="no-person-found">
   <button md-raised-button color="primary" type="button" name="back-to-search" id="back-to-search" *ngIf="!loading" (click)="gotoSearch()">Back to Search</button>
 </div>
 <div *ngIf="loading" id="loading">
